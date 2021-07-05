@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.component.mapper.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.management.entity.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_account" property="memberAccount" jdbcType="VARCHAR" />
+    <result column="member_password" property="memberPassword" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_gender" property="memberGender" jdbcType="INTEGER" />
+    <result column="member_phoneNum" property="memberPhonenum" jdbcType="VARCHAR" />
+    <result column="member_email" property="memberEmail" jdbcType="VARCHAR" />
+    <result column="member_address" property="memberAddress" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_account, member_password, member_name, member_gender, member_phoneNum, 
+    member_email, member_address, create_time, state
+  </sql>
+  <select id="selectMemberByKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from management_member
+    where member_account like CONCAT('%',#{keyword},'%')or
+    member_name like CONCAT('%',#{keyword},'%')or
+    member_phoneNum like CONCAT('%',#{keyword},'%')
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.entity.MemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from management_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from management_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from management_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.management.entity.MemberExample" >
+    delete from management_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.management.entity.Member" >
+    insert into management_member (id, member_account, member_password, 
+      member_name, member_gender, member_phoneNum, 
+      member_email, member_address, create_time, 
+      state)
+    values (#{id,jdbcType=INTEGER}, #{memberAccount,jdbcType=VARCHAR}, #{memberPassword,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{memberGender,jdbcType=INTEGER}, #{memberPhonenum,jdbcType=VARCHAR}, 
+      #{memberEmail,jdbcType=VARCHAR}, #{memberAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.management.entity.Member" >
+    insert into management_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberAccount != null" >
+        member_account,
+      </if>
+      <if test="memberPassword != null" >
+        member_password,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="memberGender != null" >
+        member_gender,
+      </if>
+      <if test="memberPhonenum != null" >
+        member_phoneNum,
+      </if>
+      <if test="memberEmail != null" >
+        member_email,
+      </if>
+      <if test="memberAddress != null" >
+        member_address,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberAccount != null" >
+        #{memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPassword != null" >
+        #{memberPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberGender != null" >
+        #{memberGender,jdbcType=INTEGER},
+      </if>
+      <if test="memberPhonenum != null" >
+        #{memberPhonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="memberEmail != null" >
+        #{memberEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAddress != null" >
+        #{memberAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.management.entity.MemberExample" resultType="java.lang.Integer" >
+    select count(*) from management_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update management_member
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberAccount != null" >
+        member_account = #{record.memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberPassword != null" >
+        member_password = #{record.memberPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberName != null" >
+        member_name = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberGender != null" >
+        member_gender = #{record.memberGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberPhonenum != null" >
+        member_phoneNum = #{record.memberPhonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberEmail != null" >
+        member_email = #{record.memberEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberAddress != null" >
+        member_address = #{record.memberAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update management_member
+    set id = #{record.id,jdbcType=INTEGER},
+      member_account = #{record.memberAccount,jdbcType=VARCHAR},
+      member_password = #{record.memberPassword,jdbcType=VARCHAR},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
+      member_gender = #{record.memberGender,jdbcType=INTEGER},
+      member_phoneNum = #{record.memberPhonenum,jdbcType=VARCHAR},
+      member_email = #{record.memberEmail,jdbcType=VARCHAR},
+      member_address = #{record.memberAddress,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.management.entity.Member" >
+    update management_member
+    <set >
+      <if test="memberAccount != null" >
+        member_account = #{memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPassword != null" >
+        member_password = #{memberPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberGender != null" >
+        member_gender = #{memberGender,jdbcType=INTEGER},
+      </if>
+      <if test="memberPhonenum != null" >
+        member_phoneNum = #{memberPhonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="memberEmail != null" >
+        member_email = #{memberEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAddress != null" >
+        member_address = #{memberAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.management.entity.Member" >
+    update management_member
+    set member_account = #{memberAccount,jdbcType=VARCHAR},
+      member_password = #{memberPassword,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_gender = #{memberGender,jdbcType=INTEGER},
+      member_phoneNum = #{memberPhonenum,jdbcType=VARCHAR},
+      member_email = #{memberEmail,jdbcType=VARCHAR},
+      member_address = #{memberAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
