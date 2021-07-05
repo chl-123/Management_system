@@ -1,8 +1,9 @@
 package com.management.entity;
 
 import java.util.Date;
+import java.util.List;
 
-public class User {
+public class AdminInfo {
     private Integer id;
 
     private String loginAccount;
@@ -16,6 +17,10 @@ public class User {
     private String phoneNumber;
 
     private Date createTime;
+
+    private Integer status;
+
+    private List<Role> roleList;
 
     public Integer getId() {
         return id;
@@ -73,7 +78,23 @@ public class User {
         this.createTime = createTime;
     }
 
-    public User(Integer id, String loginAccount, String loginPassword, String userName, String email, String phoneNumber, Date createTime) {
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public AdminInfo(Integer id, String loginAccount, String loginPassword, String userName, String email, String phoneNumber, Date createTime, Integer status, List<Role> roleList) {
         this.id = id;
         this.loginAccount = loginAccount;
         this.loginPassword = loginPassword;
@@ -81,14 +102,13 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.createTime = createTime;
-    }
-
-    public User() {
+        this.status = status;
+        this.roleList = roleList;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "AdminInfo{" +
                 "id=" + id +
                 ", loginAccount='" + loginAccount + '\'' +
                 ", loginPassword='" + loginPassword + '\'' +
@@ -96,6 +116,11 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", createTime=" + createTime +
+                ", status=" + status +
+                ", roleList=" + roleList +
                 '}';
+    }
+
+    public AdminInfo() {
     }
 }

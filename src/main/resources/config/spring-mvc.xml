@@ -51,7 +51,14 @@
                 </props>
             </property>
         </bean>-->
-    <!--<mvc:view-controller path="/admin/to/login/page.html" view-name="login"></mvc:view-controller>-->
+    <mvc:view-controller path="/admin/to/register/page.html" view-name="register"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/admin_list/page.html" view-name="admin_list"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/permission/page.html" view-name="permission"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/authorize/page.html" view-name="authorize"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/user_list/page.html" view-name="user_list"></mvc:view-controller>
+
+<!--    <mvc:view-controller path="/admin/to/member_page/member_add/page.html" view-name="member_page/member-add"></mvc:view-controller>-->
+
 <!--    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"></mvc:view-controller>
     <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"></mvc:view-controller>
     <mvc:view-controller path="/admin/to/role/page.html" view-name="role-page"></mvc:view-controller>
